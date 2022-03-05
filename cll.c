@@ -229,18 +229,22 @@ node deletebypos(node p,int pos)
     return p;
 }
 
-// node reverse(node p)
-// {
-//     node t=NULL,r=NULL;
-//     while(p!=NULL)
-//     {
-//         t=p;
-//         p=p->link;
-//         t->link=r;
-//         r=t;
-//     }
-//     return r;
-// }
+node reverse(node p)
+{
+    node l,q,r;
+    q=p->link;
+    l=q->link;
+    r=0;
+    while(q!=p)
+    {
+        r=q;
+        q=l;
+        l=l->link;
+        q->link=r;
+    }
+    l->link=q;
+    return l;
+}
 
 int main()
 {
@@ -248,7 +252,7 @@ int main()
     int ch,key,pos;
     while(1)
     {
-        printf("\n1:Insert front\n2:Insert rear\n3:Display\n4:Delete front\n5:Delete rear\n6:Search\n7:Sort\n8:Insert by order\n9:Insert by position\n10:Delete by key\n11:Delete by position\n");
+        printf("\n1:Insert front\n2:Insert rear\n3:Display\n4:Delete front\n5:Delete rear\n6:Search\n7:Sort\n8:Insert by order\n9:Insert by position\n10:Delete by key\n11:Delete by position\n12:Reverse\n");
         printf("Enter your choice\n");
         scanf("%d",&ch);
         switch(ch)
@@ -321,9 +325,11 @@ int main()
                 else
                     printf("Invalid position\n");
                 break;
-            // case 12:p=reverse(p);
-            //     dis(p);
-            //     break;
+            case 12:if(p==NULL)
+                    break;
+                p=reverse(p);
+                dis(p);
+                break;
             default: exit(0);
         } 
     }  
