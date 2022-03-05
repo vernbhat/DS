@@ -56,9 +56,10 @@ void intopost(char in[], char po[])
     int i = 0, j = 0;
     char c;
     s.top = -1;
-    for (int i = 0; i < strlen(in); i++)
+    // for (int i = 0; i < strlen(in); i++)
+    while ((c=in[i++])!='\0')
     {
-        c = in[i];
+        //c = in[i];
         if (isalnum(c))
             po[j++] = c;
         else
