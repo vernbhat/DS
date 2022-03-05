@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-
 #define size 20
 
 typedef struct stack1
@@ -15,6 +14,30 @@ typedef struct stack2
     char items[10][size];
     int top;
 } opn;
+
+void push(opr *s, char c)
+{
+    s->top++;
+    s->items[s->top] = c;
+}
+
+void push1(opn *s, char c[])
+{
+    s->top++;
+    strcpy(s->items[s->top], c);
+}
+
+char pop(opr *s)
+{
+    char c = s->items[s->top--];
+    return c;
+}
+
+char *pop1(opn *s)
+{
+    char *c = s->items[s->top--];
+    return c;
+}
 
 int stprec(char c)
 {
@@ -54,52 +77,9 @@ int inprec(char c)
     }
 }
 
-void push( char c, opr *s)
-{
-    if(s->top ==size-1)
-        printf("stack full\n");
-    else
-        s->top++;
-    s->items[s->top] = c;
-}
-
-char pop(opr *s)
-{
-    char c;
-    if(s->top ==-1)
-        printf("stack empty\n");
-    else
-        c = s->items[s->top];
-    s->top--;
-    return c;
-}
-
-void push1( char c[], opn *s)
-{
-    if(s->top ==size-1)
-        printf("stack full\n");
-    else
-        s->top++;
-    strcpy(s->items[s->top], c);
-    
-}
-
-char* pop1(opn *s)  //   char[]
-{
-    char *c; //    char c[10]
-    if(s->top ==-1)
-    {
-        printf("stack empty\n");
-	}
-    else
-        c = s->items[s->top];   // strcpy(c, s->item[s->top])
-    s->top--;
-    return c;   // return c;
-}
-
 void par(opr *optr, opn *opnd)
 {
-    char t[2], exp[20], *op1, *op2, op;
+    char op, t[2], exp[20], *op1, *op2;
     op = pop(optr);
     t[0] = op;
     t[1] = '\0';
@@ -108,56 +88,54 @@ void par(opr *optr, opn *opnd)
     strcpy(exp, t);
     strcat(exp, op1);
     strcat(exp, op2);
-    push1(exp, opnd);
+    push1(opnd, exp);
 }
 
-void intopre(char in[], char pre[])
+void inpre(char in[], char pre[])
 {
-    opr s;
+    char t[2], c;
+    int i = 0;
     opn s1;
-    char c,temp[2];
-    int i=0;
+    opr s;
     s.top = -1;
-    s1.top=-1;
-    while((c =in[i++]) !='\0')
+    s1.top = -1;
+    while ((c = in[i++]) != '\0')
     {
-        if(isalnum(c))
+        if (isalnum(c))
         {
-            temp[0]= c;    //  pos[j++]= c
-            temp[1]='\0';
-            push1(temp,&s1);
+            t[0] = c;
+            t[1] = '\0';
+            push1(&s1, t);
         }
         else
         {
-            while(s.top != -1 && stprec(s.items[s.top]) > inprec(c))
+            while (s.top != -1 && stprec(s.items[s.top]) > inprec(c))
             {
-                if(c ==')')
+                if (c == ')')
                 {
-                    while(s.items[s.top] !='(')
-                        par(&s,&s1);
-                    // po[j++] = pop(&s);
-                    pop(&s);// s.top--
+                    while (s.items[s.top] != '(')
+                        par(&s, &s1);
+                    pop(&s);
                     break;
                 }
                 else
-                    par(&s,&s1); // po[j++] = pop(&s);
+                    par(&s, &s1);
             }
-            if(c!=')')
-                push(c,&s);
+            if (c != ')')
+                push(&s, c);
         }
     }
-    while(s.top !=-1)
-        par(&s,&s1); //po[j++] = pop(&s);
-    // printf("Prefix :%s\n", s1.item[s1.top]);
+    while (s.top != -1)
+        par(&s, &s1);
     strcpy(pre, s1.items[s1.top]);
 }
 
 int main()
 {
     char in[20], pre[20];
-    printf("Enter infix expression\n");
+    printf("Enter the infix exp: ");
     scanf("%s", in);
-    intopre(in, pre);
-    printf("Prefix expression : %s\n", pre);
+    inpre(in, pre);
+    printf("Prefix exp : %s\n", pre);
     return 0;
 }
