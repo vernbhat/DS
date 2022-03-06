@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 typedef struct Node
 {
     int info;
@@ -15,6 +16,7 @@ node create(node nn)
     nn->llink = nn->rlink = nn;
     return nn;
 }
+
 void insertfront(node h)
 {
     node nn = create(nn);
@@ -24,6 +26,7 @@ void insertfront(node h)
     nn->rlink->llink = nn;
     h->info++;
 }
+
 void insertrear(node h)
 {
     node nn = create(nn);
@@ -33,6 +36,7 @@ void insertrear(node h)
     nn->llink->rlink = nn;
     h->info++;
 }
+
 void dis(node h)
 {
     node tp = h;
@@ -50,6 +54,7 @@ void dis(node h)
     }
     printf("\n");
 }
+
 void deletefront(node h)
 {
     node nd;
@@ -62,6 +67,7 @@ void deletefront(node h)
     free(nd);
     h->info--;
 }
+
 void deleterear(node h)
 {
     node nd = h->llink;
@@ -73,6 +79,7 @@ void deleterear(node h)
     h->info--;
     free(nd);
 }
+
 int search(node h, int key)
 {
     node tp = h->rlink;
@@ -84,6 +91,7 @@ int search(node h, int key)
     }
     return -1;
 }
+
 void sort(node h)
 {
     node tp;
@@ -103,6 +111,7 @@ void sort(node h)
         }
     }
 }
+
 void insertbypos(node h, int pos)
 {
     node tp = h->rlink;
@@ -119,17 +128,11 @@ void insertbypos(node h, int pos)
     tp->llink = nn;
     h->info++;
 }
+
 void insertbyorder(node h)
 {
     node tp = h->rlink;
     node nn = create(nn);
-    // if (h->info == 0)
-    // {
-    //     h->rlink = nn;
-    //     nn->llink = h;
-    //     h->info++;
-    //     return;
-    // }
     while (tp != h && nn->info > tp->info)
         tp = tp->rlink;
     tp->llink->rlink = nn;
@@ -138,6 +141,7 @@ void insertbyorder(node h)
     tp->llink = nn;
     h->info++;
 }
+
 void deletebykey(node h, int key)
 {
     node tp = h->rlink, q;
@@ -159,6 +163,7 @@ void deletebykey(node h, int key)
     free(tp);
     h->info--;
 }
+
 void deletebypos(node h, int pos)
 {
     node nd = h->rlink, tp = h;
@@ -175,6 +180,7 @@ void deletebypos(node h, int pos)
     free(nd);
     h->info--;
 }
+
 void reverse(node h)
 {
     node tp = h->rlink, ln = h->llink;
@@ -188,6 +194,7 @@ void reverse(node h)
         ln = ln->llink;
     }
 }
+
 int main()
 {
     node h = (node)malloc(sizeof(struct Node));
