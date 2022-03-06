@@ -16,6 +16,7 @@ node create(node nn)
     nn->llink = nn->rlink = NULL;
     return nn;
 }
+
 void insertfront(node h)
 {
     node nn;
@@ -27,6 +28,7 @@ void insertfront(node h)
         nn->rlink->llink = nn;
     h->info++;
 }
+
 void insertrear(node h)
 {
     node nn = create(nn);
@@ -37,6 +39,7 @@ void insertrear(node h)
     nn->llink = tp;
     h->info++;
 }
+
 void dis(node h)
 {
     node tp = h;
@@ -54,6 +57,7 @@ void dis(node h)
     }
     printf("\n");
 }
+
 void deletefront(node h)
 {
     node nd;
@@ -67,6 +71,7 @@ void deletefront(node h)
     free(nd);
     h->info--;
 }
+
 void deleterear(node h)
 {
     node nd, pn;
@@ -84,6 +89,7 @@ void deleterear(node h)
     pn->rlink = NULL;
     free(nd);
 }
+
 int search(node h, int key)
 {
     node tp = h->rlink;
@@ -95,6 +101,7 @@ int search(node h, int key)
     }
     return -1;
 }
+
 void sort(node h)
 {
     node tp;
@@ -114,6 +121,7 @@ void sort(node h)
         }
     }
 }
+
 void insertbypos(node h, int pos)
 {
     node tp = h->rlink, q = h;
@@ -134,6 +142,7 @@ void insertbypos(node h, int pos)
     }
     h->info++;
 }
+
 void insertbyorder(node h)
 {
     node tp, pn = h;
@@ -160,6 +169,7 @@ void insertbyorder(node h)
     }
     h->info++;
 }
+
 void deletebykey(node h, int key)
 {
     node tp = h->rlink, q;
@@ -182,6 +192,7 @@ void deletebykey(node h, int key)
     free(tp);
     h->info--;
 }
+
 void deletebypos(node h, int pos)
 {
     node nd = h->rlink, tp = h;
@@ -199,6 +210,7 @@ void deletebypos(node h, int pos)
     free(nd);
     h->info--;
 }
+
 void reverse(node h)
 {
     node tp = h->rlink, ln = h;
@@ -214,6 +226,7 @@ void reverse(node h)
         ln = ln->llink;
     }
 }
+
 int main()
 {
     node h = (node)malloc(sizeof(struct Node));
