@@ -45,6 +45,7 @@ void dis(node h)
         return;
     }
     tp = tp->rlink;
+    printf("Displaying\n");
     while (tp != NULL)
     {
         printf("%d ", tp->info);
@@ -316,6 +317,8 @@ int main()
             reverse(h);
             dis(h);
             break;
+        default:
+            exit(0);
         }
     }
 }
