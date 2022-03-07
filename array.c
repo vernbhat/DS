@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define size 5
-int n = 0;
+int size,n = 0;
 void insert(int *a)
 {
     if (n == size)
@@ -112,6 +111,8 @@ void reverse(int *a)
 int main()
 {
     int *a, ch, pos, key;
+    printf("Enter the size\n");
+    scanf("%d",&size);
     a = (int *)malloc(size * sizeof(int));
     while (1)
     {
