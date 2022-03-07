@@ -8,7 +8,7 @@ typedef struct Queue
 } que;
 void enqueue(que *q)
 {
-    int item;
+    int item,i;
     if (q->count == q->size)
     {
         printf("Queue is full\n");
@@ -16,8 +16,10 @@ void enqueue(que *q)
     }
     printf("Enter item\n");
     scanf("%d", &item);
-    q->r = (q->r + 1) % q->size;
-    q->items[q->r] = item;
+    q->r++;
+    for(i=q->count-1;item<q->items[i];i--)
+        q->items[i+1]=q->items[i];
+    q->items[i+1] = item;
     q->count++;
 }
 void dequeue(que *q)
@@ -25,7 +27,12 @@ void dequeue(que *q)
     if (q->count == 0)
         return;
     printf("Deleted is %d\n", q->items[q->f]);
-    q->f = (q->f + 1) % q->size;
+    q->f++;
+    if (q->f > q->r)
+    {
+        q->r = -1;
+        q->f = 0;
+    }
     q->count--;
 }
 void dis(que *q)
@@ -39,9 +46,10 @@ void dis(que *q)
     while (i <= q->count)
     {
         printf("%d ", q->items[j]);
-        j = (j + 1) % q->size;
+        j++;
         i++;
     }
+    printf("\n");
 }
 int main()
 {

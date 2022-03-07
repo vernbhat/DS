@@ -16,7 +16,7 @@ void enqueue(que *q)
     }
     printf("Enter item\n");
     scanf("%d", &item);
-    q->r = (q->r + 1) % q->size;
+    q->r++;
     q->items[q->r] = item;
     q->count++;
 }
@@ -25,7 +25,12 @@ void dequeue(que *q)
     if (q->count == 0)
         return;
     printf("Deleted is %d\n", q->items[q->f]);
-    q->f = (q->f + 1) % q->size;
+    q->f++;
+    if (q->f > q->r)
+    {
+        q->r = -1;
+        q->f = 0;
+    }
     q->count--;
 }
 void dis(que *q)
@@ -39,9 +44,44 @@ void dis(que *q)
     while (i <= q->count)
     {
         printf("%d ", q->items[j]);
-        j = (j + 1) % q->size;
+        j++;
         i++;
     }
+    printf("\n");
+}
+void insertfront(que *q)
+{
+    int item;
+    if (q->count == q->size)
+    {
+        printf("Queue is full\n");
+        return;
+    }
+    printf("Enter item\n");
+    scanf("%d", &item);
+    if (q->count == 0)
+        q->items[++q->r] = item;
+    else if (q->f == 0)
+    {
+        printf("Front end is full\n");
+        return;
+    }
+    else
+        q->items[--q->f] = item;
+    q->count++;
+}
+void deleterear(que *q)
+{
+    if (q->count == 0)
+        return;
+    printf("Deleted is %d\n", q->items[q->r]);
+    q->r--;
+    if (q->f > q->r)
+    {
+        q->r = -1;
+        q->f = 0;
+    }
+    q->count--;
 }
 int main()
 {
@@ -55,7 +95,7 @@ int main()
     q.count = 0;
     while (1)
     {
-        printf("\n1:Enqueue\n2:Dequeue\n3:Display\n");
+        printf("\n1:Enqueue\n2:Dequeue\n3:Display\n4:Insert front\n5:Delete rear\n");
         printf("Enter your choice\n");
         scanf("%d", &ch);
         switch (ch)
@@ -69,6 +109,14 @@ int main()
             dis(&q);
             break;
         case 3:
+            dis(&q);
+            break;
+        case 4:
+            insertfront(&q);
+            dis(&q);
+            break;
+        case 5:
+            deleterear(&q);
             dis(&q);
             break;
         default:
