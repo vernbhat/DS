@@ -17,11 +17,11 @@ void push(char c, st *s)
     s->items[s->top] = c;
 }
 
-char pop(st *s)
+float pop(st *s)
 {
-    char c;
+    float c;
     if (s->top == -1)
-        return;
+        return c;
     c = s->items[s->top];
     s->top--;
     return c;
