@@ -6,7 +6,7 @@
 
 typedef struct stack
 {
-    char items[size];
+    float items[size];
     int top;
 } st;
 
@@ -27,13 +27,18 @@ typedef struct stack
 
 void push(char c, st *s)
 {
+    if (s->top == size - 1)
+        return;
     s->top++;
     s->items[s->top] = c;
 }
 
 char pop(st *s)
 {
-    char c = s->items[s->top];
+    char c;
+    if (s->top == -1)
+        return;
+    c = s->items[s->top];
     s->top--;
     return c;
 }

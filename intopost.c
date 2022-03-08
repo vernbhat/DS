@@ -23,7 +23,6 @@ int stprec(char c)
     case '$':
         return 6;
     case '(':
-    case ')':
         return 0;
     }
     return -1;
