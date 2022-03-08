@@ -33,11 +33,11 @@ void push(char c, st *s)
     s->items[s->top] = c;
 }
 
-char pop(st *s)
+float pop(st *s)
 {
-    char c;
+    float c;
     if (s->top == -1)
-        return;
+        return c;
     c = s->items[s->top];
     s->top--;
     return c;
@@ -68,7 +68,7 @@ void evaluate(char po[])
     int i = strlen(po) - 1;
     char c, op;
     s.top = -1;
-    while (i>=0)
+    while (i >= 0)
     {
         c = po[i];
         if (isalnum(c))
@@ -83,7 +83,10 @@ void evaluate(char po[])
         i--;
     }
     res = pop(&s);
-    printf("Answer is %f\n", res);
+    if (s.top != -1)
+        printf("Invalid exp\n");
+    else
+        printf("Answer is %f\n", res);
 }
 
 int main()
